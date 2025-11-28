@@ -39,7 +39,7 @@ export default function AgencySizeSelector({
   const isSelected = (size: string) => selectedSizes.includes(size);
 
   return (
-    <div className="flex flex-col items-center justify-center h-full">
+    <div className="flex flex-col items-center justify-start h-full">
       {/* Toggle buttons */}
       <div className="flex gap-2 mb-2">
         <button
