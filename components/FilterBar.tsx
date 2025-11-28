@@ -121,8 +121,32 @@ export default function FilterBar({
         {/* Theme Bubble Selector */}
         <div className="mb-6">
           <label className="block text-sm font-medium text-gray-700 mb-3">
-            Filter by Theme
+            Theme {filters.themes.length > 0 && `(${filters.themes.length} selected)`}
           </label>
+          {/* Toggle buttons */}
+          <div className="flex gap-2 mb-3">
+            <button
+              onClick={() => onFilterChange({ ...filters, themes: [] })}
+              className={`px-3 py-1 text-xs font-medium rounded-full transition-all cursor-pointer ${
+                filters.themes.length === 0
+                  ? 'bg-[#EE0B4F] text-white'
+                  : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+              }`}
+            >
+              All Themes
+            </button>
+            <button
+              onClick={() => onFilterChange({ ...filters, themes: [] })}
+              className={`px-3 py-1 text-xs font-medium rounded-full transition-all cursor-pointer ${
+                filters.themes.length > 0
+                  ? 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+                  : 'bg-gray-100 text-gray-400'
+              }`}
+              disabled={filters.themes.length === 0}
+            >
+              Clear
+            </button>
+          </div>
           <div className="flex flex-wrap gap-2">
             {filterOptions.themes.map((theme) => {
               const isSelected = filters.themes.includes(theme);
