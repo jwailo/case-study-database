@@ -196,7 +196,7 @@ export default function FilterBar({
                         <img
                           src={logo}
                           alt={brand}
-                          className="h-[50px] w-[80px] object-contain"
+                          className="h-[72px] w-[72px] object-contain"
                         />
                       ) : (
                         <span className="px-2 text-sm font-medium text-gray-700">{brand}</span>
