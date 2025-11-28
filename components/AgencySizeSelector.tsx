@@ -44,7 +44,7 @@ export default function AgencySizeSelector({
       <div className="flex gap-2 mb-2">
         <button
           onClick={onSelectAll}
-          className={`px-3 py-1 text-xs font-medium rounded-full transition-all ${
+          className={`px-3 py-1 text-xs font-medium rounded-full transition-all cursor-pointer ${
             allSelected
               ? 'bg-[#EE0B4F] text-white'
               : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
@@ -54,7 +54,7 @@ export default function AgencySizeSelector({
         </button>
         <button
           onClick={onClearAll}
-          className={`px-3 py-1 text-xs font-medium rounded-full transition-all ${
+          className={`px-3 py-1 text-xs font-medium rounded-full transition-all cursor-pointer ${
             selectedSizes.length > 0 && selectedSizes.length < agencySizes.length
               ? 'bg-gray-200 text-gray-700 hover:bg-gray-300'
               : 'bg-gray-100 text-gray-400'
@@ -74,7 +74,7 @@ export default function AgencySizeSelector({
             <button
               key={size.value}
               onClick={() => onSizeToggle(size.value)}
-              className={`flex flex-col items-center p-2 rounded-xl border-2 transition-all ${
+              className={`flex flex-col items-center p-2 rounded-xl border-2 transition-all cursor-pointer ${
                 showSelected
                   ? 'border-[#EE0B4F] bg-pink-50 shadow-md'
                   : 'border-gray-200 bg-white hover:border-gray-300 hover:shadow-md'

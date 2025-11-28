@@ -130,7 +130,7 @@ export default function FilterBar({
                 <button
                   key={theme}
                   onClick={() => handleThemeChange(theme)}
-                  className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${
+                  className={`px-4 py-2 rounded-full text-sm font-medium transition-all cursor-pointer ${
                     isSelected
                       ? 'text-white shadow-md'
                       : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
@@ -155,7 +155,7 @@ export default function FilterBar({
               {/* All Brands option */}
               <button
                 onClick={() => onFilterChange({ ...filters, brands: [] })}
-                className={`p-3 rounded-lg border-2 transition-all ${
+                className={`p-3 rounded-lg border-2 transition-all cursor-pointer ${
                   filters.brands.length === 0
                     ? 'border-[#EE0B4F] bg-pink-50 shadow-md'
                     : 'border-gray-200 bg-white hover:border-gray-300'
@@ -177,7 +177,7 @@ export default function FilterBar({
                     <button
                       key={brand}
                       onClick={() => handleBrandChange(brand)}
-                      className={`p-3 rounded-lg border-2 transition-all ${
+                      className={`p-3 rounded-lg border-2 transition-all cursor-pointer ${
                         isSelected
                           ? 'border-[#EE0B4F] bg-pink-50 shadow-md'
                           : 'border-gray-200 bg-white hover:border-gray-300'
