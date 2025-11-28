@@ -151,23 +151,31 @@ export default function FilterBar({
             <label className="block text-sm font-medium text-gray-700 mb-3">
               Brand {filters.brands.length > 0 && `(${filters.brands.length} selected)`}
             </label>
-            <div className="flex flex-wrap gap-3">
-              {/* All Brands option */}
+            {/* Toggle buttons */}
+            <div className="flex gap-2 mb-3">
               <button
                 onClick={() => onFilterChange({ ...filters, brands: [] })}
-                className={`p-3 rounded-lg border-2 transition-all cursor-pointer ${
+                className={`px-3 py-1 text-xs font-medium rounded-full transition-all cursor-pointer ${
                   filters.brands.length === 0
-                    ? 'border-[#EE0B4F] bg-pink-50 shadow-md'
-                    : 'border-gray-200 bg-white hover:border-gray-300'
+                    ? 'bg-[#EE0B4F] text-white'
+                    : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
                 }`}
-                title="All Brands"
               >
-                <img
-                  src="/logos/all-brands.png"
-                  alt="All Brands"
-                  className="h-[72px] w-auto object-contain"
-                />
+                All Brands
               </button>
+              <button
+                onClick={() => onFilterChange({ ...filters, brands: [] })}
+                className={`px-3 py-1 text-xs font-medium rounded-full transition-all cursor-pointer ${
+                  filters.brands.length > 0
+                    ? 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+                    : 'bg-gray-100 text-gray-400'
+                }`}
+                disabled={filters.brands.length === 0}
+              >
+                Clear
+              </button>
+            </div>
+            <div className="flex flex-wrap gap-3">
               {filterOptions.brands
                 .filter((brand) => !excludedBrands.includes(brand))
                 .map((brand) => {
