@@ -75,7 +75,7 @@ export default function Home() {
     };
   }, [caseStudies]);
 
-  // Filter case studies based on active filters
+  // Filter and sort case studies based on active filters
   const filteredCaseStudies = useMemo(() => {
     return caseStudies.filter((cs) => {
       // Theme filter (ANY match - OR logic for multiple selected themes)
@@ -109,6 +109,11 @@ export default function Home() {
       }
 
       return true;
+    }).sort((a, b) => {
+      // Sort by yearPublished descending (most recent first)
+      const yearA = parseInt(a.yearPublished) || 0;
+      const yearB = parseInt(b.yearPublished) || 0;
+      return yearB - yearA;
     });
   }, [caseStudies, filters]);
 
