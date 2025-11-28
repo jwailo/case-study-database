@@ -6,6 +6,7 @@ interface CaseStudyCardProps {
 
 // Map brand names to logo filenames
 const brandLogoMap: Record<string, string> = {
+  'Barry Plant': '/logos/barry-plant.png',
   'Belle': '/logos/belle.png',
   'Belle Property': '/logos/belle.png',
   'Harcourts': '/logos/harcourts.png',
