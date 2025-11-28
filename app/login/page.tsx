@@ -61,7 +61,7 @@ export default function LoginPage() {
               className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#EE0B4F] focus:border-transparent outline-none transition text-gray-900"
               placeholder="Enter password"
               required
-              style={{ WebkitTextSecurity: 'disc' }}
+              style={{ WebkitTextSecurity: 'disc' } as React.CSSProperties}
             />
           </div>
 
