@@ -16,8 +16,8 @@ const agencySizes = [
     iconSize: 32, // smallest
   },
   {
-    value: '400 - 1000 PUM',
-    label: '400 - 1000 PUM',
+    value: '400-1000 PUM',
+    label: '400-1000 PUM',
     shortLabel: '400-1000 PUM',
     iconSize: 48, // medium
   },

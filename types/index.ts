@@ -28,6 +28,6 @@ export interface Filters {
 // Export agency size values for consistency
 export const AGENCY_SIZE_VALUES = [
   'Less than 400 PUM',
-  '400 - 1000 PUM',
+  '400-1000 PUM',
   '1000+ PUM',
 ] as const;
