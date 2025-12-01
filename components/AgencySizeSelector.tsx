@@ -29,14 +29,18 @@ const agencySizes = [
   },
 ];
 
+// Special value for entries with no agency size
+const NA_VALUE = '';
+
 export default function AgencySizeSelector({
   selectedSizes,
   onSizeToggle,
   onSelectAll,
   onClearAll,
 }: AgencySizeSelectorProps) {
-  const allSelected = selectedSizes.length === 0 || selectedSizes.length === agencySizes.length;
+  const allSelected = selectedSizes.length === 0;
   const isSelected = (size: string) => selectedSizes.includes(size);
+  const isNASelected = selectedSizes.includes(NA_VALUE);
 
   return (
     <div className="flex flex-col items-center justify-start h-full">
@@ -53,9 +57,19 @@ export default function AgencySizeSelector({
           All Sizes
         </button>
         <button
+          onClick={() => onSizeToggle(NA_VALUE)}
+          className={`px-3 py-1 text-xs font-medium rounded-full transition-all cursor-pointer ${
+            isNASelected
+              ? 'bg-[#EE0B4F] text-white'
+              : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+          }`}
+        >
+          N/A
+        </button>
+        <button
           onClick={onClearAll}
           className={`px-3 py-1 text-xs font-medium rounded-full transition-all cursor-pointer ${
-            selectedSizes.length > 0 && selectedSizes.length < agencySizes.length
+            selectedSizes.length > 0
               ? 'bg-gray-200 text-gray-700 hover:bg-gray-300'
               : 'bg-gray-100 text-gray-400'
           }`}
