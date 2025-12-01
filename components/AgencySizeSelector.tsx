@@ -29,8 +29,8 @@ const agencySizes = [
   },
 ];
 
-// Special value for entries with no agency size
-const NA_VALUE = '';
+// Special value for entries with N/A agency size
+const NA_VALUE = 'N/A';
 
 export default function AgencySizeSelector({
   selectedSizes,
