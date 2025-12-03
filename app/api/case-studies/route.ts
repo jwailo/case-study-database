@@ -14,4 +14,4 @@ export async function GET() {
   }
 }
 
-export const revalidate = 3600; // Revalidate every hour
+export const dynamic = 'force-dynamic'; // Always fetch fresh data from Google Sheets
