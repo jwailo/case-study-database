@@ -48,6 +48,18 @@ export default function Home() {
     router.refresh();
   };
 
+  // Generate auth token for ASET
+  const generateAuthToken = () => {
+    const secret = 'ailo-sales-2024';
+    const today = new Date().toISOString().split('T')[0];
+    return btoa(`${secret}-${today}`);
+  };
+
+  const handleTerritoryMapClick = () => {
+    const token = generateAuthToken();
+    window.location.href = `https://post-code-finder.vercel.app/?auth=${token}`;
+  };
+
   // Extract unique filter options from case studies
   const filterOptions: FilterOptions = useMemo(() => {
     const themes = new Set<string>();
@@ -162,12 +174,12 @@ export default function Home() {
             Ailo Case Study Database
           </h1>
           <div className="flex items-center gap-4">
-            <a
-              href="https://post-code-finder.vercel.app/"
+            <button
+              onClick={handleTerritoryMapClick}
               className="text-sm font-medium text-gray-600 hover:text-gray-900"
             >
               Territory Map
-            </a>
+            </button>
             <button
               onClick={handleLogout}
               className="text-sm font-medium text-gray-600 hover:text-gray-900"
