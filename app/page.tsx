@@ -161,12 +161,20 @@ export default function Home() {
           <h1 className="text-3xl font-bold" style={{ color: '#EE0B4F' }}>
             Ailo Case Study Database
           </h1>
-          <button
-            onClick={handleLogout}
-            className="text-sm font-medium text-gray-600 hover:text-gray-900"
-          >
-            Sign Out
-          </button>
+          <div className="flex items-center gap-4">
+            <a
+              href="https://post-code-finder.vercel.app/"
+              className="text-sm font-medium text-gray-600 hover:text-gray-900"
+            >
+              Territory Map
+            </a>
+            <button
+              onClick={handleLogout}
+              className="text-sm font-medium text-gray-600 hover:text-gray-900"
+            >
+              Sign Out
+            </button>
+          </div>
         </div>
       </header>
 
