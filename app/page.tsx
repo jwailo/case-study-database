@@ -16,6 +16,7 @@ export default function Home() {
     brands: [],
     states: [],
     agencySizes: [],
+    legacySystems: [],
   });
   const router = useRouter();
 
@@ -66,11 +67,14 @@ export default function Home() {
     const brands = new Set<string>();
     const states = new Set<string>();
     const agencySizes = new Set<string>();
+    const legacySystems = new Set<string>();
 
     caseStudies.forEach((cs) => {
       if (cs.brand) brands.add(cs.brand);
       if (cs.state) states.add(cs.state);
       if (cs.agencySize && cs.agencySize !== 'N/A') agencySizes.add(cs.agencySize);
+      // Always add legacySystem, including empty strings (they map to "No System" category)
+      legacySystems.add(cs.legacySystem);
 
       // Split themes by comma
       cs.theme.split(',').forEach((theme) => {
@@ -84,6 +88,7 @@ export default function Home() {
       brands: Array.from(brands).sort(),
       states: Array.from(states).sort(),
       agencySizes: Array.from(agencySizes).sort(),
+      legacySystems: Array.from(legacySystems).sort(),
     };
   }, [caseStudies]);
 
@@ -116,6 +121,13 @@ export default function Home() {
       // Agency size filter (ANY match - OR logic for multiple selected sizes)
       if (filters.agencySizes.length > 0) {
         if (!filters.agencySizes.includes(cs.agencySize)) {
+          return false;
+        }
+      }
+
+      // Legacy system filter (ANY match - OR logic for multiple selected systems)
+      if (filters.legacySystems.length > 0) {
+        if (!filters.legacySystems.includes(cs.legacySystem)) {
           return false;
         }
       }
@@ -217,6 +229,7 @@ export default function Home() {
                   brands: [],
                   states: [],
                   agencySizes: [],
+                  legacySystems: [],
                 })
               }
               className="px-4 py-2 rounded-lg text-white font-semibold"

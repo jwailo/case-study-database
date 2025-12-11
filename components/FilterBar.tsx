@@ -32,6 +32,56 @@ const brandLogoMap: Record<string, string> = {
 // Brands to exclude from the filter buttons
 const excludedBrands = ['Other Network', 'Consumer'];
 
+// Canonical legacy system categories with their logos
+const legacySystemCategories: { name: string; logo: string }[] = [
+  { name: 'Console', logo: '/legacy-systems/Console.jpeg' },
+  { name: 'Property Tree', logo: '/legacy-systems/Property Tree.jpeg' },
+  { name: 'Propertyme', logo: '/legacy-systems/Propertyme.jpeg' },
+  { name: 'REST', logo: '/legacy-systems/REST.jpeg' },
+  { name: 'Our property', logo: '/legacy-systems/Our property.jpeg' },
+  { name: 'managed', logo: '/legacy-systems/managed.jpeg' },
+  { name: 'No System', logo: '/legacy-systems/No System.jpeg' },
+  { name: 'Other', logo: '/legacy-systems/Other.jpeg' },
+  { name: 'Unknown', logo: '/legacy-systems/unknown.jpeg' },
+];
+
+// Map raw data values to canonical category names
+function normalizeSystemToCategory(system: string): string {
+  const lowerSystem = system.toLowerCase().trim();
+
+  // Console variations
+  if (lowerSystem === 'console' || lowerSystem === 'console cloud') return 'Console';
+
+  // Property Tree variations
+  if (lowerSystem === 'property tree' || lowerSystem === 'propertytree') return 'Property Tree';
+
+  // PropertyMe variations
+  if (lowerSystem === 'propertyme' || lowerSystem === 'property me') return 'Propertyme';
+
+  // REST variations
+  if (lowerSystem === 'rest' || lowerSystem === 'rest professional') return 'REST';
+
+  // Our Property variations
+  if (lowerSystem === 'our property' || lowerSystem === 'ourproperty') return 'Our property';
+
+  // Managed
+  if (lowerSystem === 'managed') return 'managed';
+
+  // No System
+  if (lowerSystem === 'no system' || lowerSystem === 'none' || lowerSystem === 'n/a') return 'No System';
+
+  // Unknown - empty/blank fields
+  if (lowerSystem === '') return 'Unknown';
+
+  // Everything else goes to "Other" (IRE, Ailo, RP Office, Vault, etc.)
+  return 'Other';
+}
+
+// Get the raw system values that belong to a category
+function getSystemValuesForCategory(category: string, allSystems: string[]): string[] {
+  return allSystems.filter(system => normalizeSystemToCategory(system) === category);
+}
+
 function getBrandLogo(brand: string): string | null {
   if (brandLogoMap[brand] !== undefined) {
     return brandLogoMap[brand];
@@ -100,12 +150,42 @@ export default function FilterBar({
     onFilterChange({ ...filters, agencySizes: [] });
   };
 
+  // Handle clicking a legacy system category - toggles all raw values that belong to that category
+  const handleLegacySystemCategoryChange = (category: string) => {
+    const rawValuesInCategory = getSystemValuesForCategory(category, filterOptions.legacySystems);
+    const allSelected = rawValuesInCategory.every(v => filters.legacySystems.includes(v));
+
+    let newSystems: string[];
+    if (allSelected) {
+      // Deselect all values in this category
+      newSystems = filters.legacySystems.filter(s => !rawValuesInCategory.includes(s));
+    } else {
+      // Select all values in this category
+      const toAdd = rawValuesInCategory.filter(v => !filters.legacySystems.includes(v));
+      newSystems = [...filters.legacySystems, ...toAdd];
+    }
+
+    onFilterChange({ ...filters, legacySystems: newSystems });
+  };
+
+  // Check if a category is selected (all its raw values are in the filter)
+  const isCategorySelected = (category: string): boolean => {
+    const rawValuesInCategory = getSystemValuesForCategory(category, filterOptions.legacySystems);
+    return rawValuesInCategory.length > 0 && rawValuesInCategory.every(v => filters.legacySystems.includes(v));
+  };
+
+  // Get categories that have data (at least one raw value maps to them)
+  const availableCategories = legacySystemCategories.filter(cat =>
+    getSystemValuesForCategory(cat.name, filterOptions.legacySystems).length > 0
+  );
+
   const handleClearFilters = () => {
     onFilterChange({
       themes: [],
       brands: [],
       states: [],
       agencySizes: [],
+      legacySystems: [],
     });
   };
 
@@ -113,7 +193,8 @@ export default function FilterBar({
     filters.themes.length > 0 ||
     filters.brands.length > 0 ||
     filters.states.length > 0 ||
-    filters.agencySizes.length > 0;
+    filters.agencySizes.length > 0 ||
+    filters.legacySystems.length > 0;
 
   return (
     <div className="bg-white shadow-sm border-b border-gray-200">
@@ -169,7 +250,7 @@ export default function FilterBar({
         </div>
 
         {/* Filter Controls - 3 Column Layout */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-6">
           {/* Brand Logo Selector */}
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-3">
@@ -255,6 +336,60 @@ export default function FilterBar({
               onSelectAll={handleSelectAllAgencySizes}
               onClearAll={handleClearAgencySizes}
             />
+
+            {/* Legacy System Selector - Under Agency Size */}
+            <div className="mt-6">
+              <label className="block text-sm font-medium text-gray-700 mb-3">
+                Legacy System {availableCategories.filter(cat => isCategorySelected(cat.name)).length > 0 && `(${availableCategories.filter(cat => isCategorySelected(cat.name)).length} selected)`}
+              </label>
+              {/* Toggle buttons */}
+              <div className="flex gap-2 mb-3">
+                <button
+                  onClick={() => onFilterChange({ ...filters, legacySystems: [] })}
+                  className={`px-3 py-1 text-xs font-medium rounded-full transition-all cursor-pointer ${
+                    filters.legacySystems.length === 0
+                      ? 'bg-[#EE0B4F] text-white'
+                      : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                  }`}
+                >
+                  All Systems
+                </button>
+                <button
+                  onClick={() => onFilterChange({ ...filters, legacySystems: [] })}
+                  className={`px-3 py-1 text-xs font-medium rounded-full transition-all cursor-pointer ${
+                    filters.legacySystems.length > 0
+                      ? 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+                      : 'bg-gray-100 text-gray-400'
+                  }`}
+                  disabled={filters.legacySystems.length === 0}
+                >
+                  Clear
+                </button>
+              </div>
+              <div className="flex flex-wrap gap-3">
+                {availableCategories.map((category) => {
+                  const isSelected = isCategorySelected(category.name);
+                  return (
+                    <button
+                      key={category.name}
+                      onClick={() => handleLegacySystemCategoryChange(category.name)}
+                      className={`p-3 rounded-lg border-2 transition-all cursor-pointer ${
+                        isSelected
+                          ? 'border-[#EE0B4F] bg-pink-50 shadow-md'
+                          : 'border-gray-200 bg-white hover:border-gray-300'
+                      }`}
+                      title={category.name}
+                    >
+                      <img
+                        src={category.logo}
+                        alt={category.name}
+                        className="h-[72px] w-[72px] object-contain"
+                      />
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
           </div>
         </div>
 

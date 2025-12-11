@@ -82,7 +82,7 @@ export default function AustraliaMap({
       {/* Australia Map SVG - Professional paths from SimpleMaps */}
       <svg
         viewBox="0 0 1000 966"
-        className="w-full max-w-[320px] h-auto"
+        className="w-full max-w-[400px] h-auto"
         xmlns="http://www.w3.org/2000/svg"
         aria-label="Clickable Map of Australia"
       >

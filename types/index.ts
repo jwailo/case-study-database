@@ -16,6 +16,7 @@ export interface FilterOptions {
   brands: string[];
   states: string[];
   agencySizes: string[];
+  legacySystems: string[];
 }
 
 export interface Filters {
@@ -23,6 +24,7 @@ export interface Filters {
   brands: string[];
   states: string[];
   agencySizes: string[];
+  legacySystems: string[];
 }
 
 // Export agency size values for consistency
