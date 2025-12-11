@@ -190,7 +190,7 @@ export default function Home() {
               onClick={handleTerritoryMapClick}
               className="text-sm font-medium text-gray-600 hover:text-gray-900"
             >
-              Territory Map
+              Home
             </button>
             <button
               onClick={handleLogout}
