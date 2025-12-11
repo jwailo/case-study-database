@@ -42,7 +42,7 @@ const legacySystemCategories: { name: string; logo: string }[] = [
   { name: 'managed', logo: '/legacy-systems/managed.jpeg' },
   { name: 'No System', logo: '/legacy-systems/No System.jpeg' },
   { name: 'Other', logo: '/legacy-systems/Other.jpeg' },
-  { name: 'Unknown', logo: '/legacy-systems/unknown.jpeg' },
+  { name: 'Unknown', logo: '/legacy-systems/Unknown.jpeg' },
 ];
 
 // Map raw data values to canonical category names
